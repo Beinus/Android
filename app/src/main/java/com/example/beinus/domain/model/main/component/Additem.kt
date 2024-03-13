@@ -3,6 +3,7 @@ package com.example.beinus.domain.model.main.component
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -18,7 +19,7 @@ fun RowScope.AddItem(
     navigate: (NavHostController, String) -> Unit
 ) {
     NavigationBarItem(
-        label = { Frame.Text(text = screen.title) },
+        label = { Text(text = screen.title) },
         icon = {
             if (screen.route == currentDestination?.route) {
                 Icon(
