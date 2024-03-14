@@ -1,4 +1,4 @@
-package com.example.beinus.presentation.login
+package com.example.beinus.presentation.account_setting
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -11,9 +11,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class AccountSettingViewModel @Inject constructor(
     private val service: Repository
 ) : ViewModel() {
+    private val _employeeList = mutableStateOf<List<Employee>>(emptyList())
+    val employeeList: State<List<Employee>> = _employeeList
+
     private val _name = mutableStateOf("")
     val name: State<String> = _name
 
@@ -22,6 +25,12 @@ class LoginViewModel @Inject constructor(
 
     private val _location = mutableStateOf<String>("")
     val location: State<String> = _location
+
+    fun getAllEmployees() {
+        viewModelScope.launch {
+            _employeeList.value = service.getAllEmployees()
+        }
+    }
     fun setName(name: String) {
         _name.value = name
     }
