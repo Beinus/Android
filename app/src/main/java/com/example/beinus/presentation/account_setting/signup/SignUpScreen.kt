@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -25,6 +26,8 @@ fun SignUpScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: AccountSettingViewModel = hiltViewModel()
 ) {
+    viewModel.getAllUsers()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -72,6 +75,7 @@ fun SignUpScreen(
         }
 
         Button(
+            modifier = Modifier.fillMaxWidth(0.5f),
             onClick = {
                 if (viewModel.hasEmptyField()) {
                     Toast.makeText(context, "Please fill all the blanks", Toast.LENGTH_SHORT).show()

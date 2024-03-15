@@ -43,7 +43,7 @@ fun LoginScreen(
                 onValueChange = { viewModel.setUserID(it) },
                 label = {
                     Text(
-                        text = "Name"
+                        text = "ID"
                     )
                 },
                 singleLine = true
@@ -56,7 +56,7 @@ fun LoginScreen(
                 onValueChange = { viewModel.setUserPW(it) },
                 label = {
                     Text(
-                        text = "Branch"
+                        text = "Password"
                     )
                 },
             )
