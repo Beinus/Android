@@ -1,9 +1,9 @@
 package com.example.beinus.data.remote.dto
 
-import com.example.beinus.data.remote.model.Employee
+import com.example.beinus.data.remote.model.User
 
 interface ApiService {
-    suspend fun getAllEmployees(): List<Employee>
+    suspend fun getAllUsers(): List<User>
 
-    suspend fun save(employee: Employee)
+    suspend fun save(user: User)
 }
