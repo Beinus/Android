@@ -36,11 +36,11 @@ fun SignUpScreen(
 
         Column {
             OutlinedTextField(
-                value = viewModel.name.value,
-                onValueChange = { viewModel.setName(it) },
+                value = viewModel.userID.value,
+                onValueChange = { viewModel.setUserID(it) },
                 label = {
                     Text(
-                        text = "Name"
+                        text = "ID"
                     )
                 },
                 singleLine = true
@@ -49,11 +49,11 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = viewModel.location.value,
-                onValueChange = { viewModel.setLocation(it) },
+                value = viewModel.userPW.value,
+                onValueChange = { viewModel.setUserPW(it) },
                 label = {
                     Text(
-                        text = "Location"
+                        text = "password"
                     )
                 },
             )
@@ -61,11 +61,11 @@ fun SignUpScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = viewModel.branch.value,
-                onValueChange = { viewModel.setBranch(it) },
+                value = viewModel.userPW2.value,
+                onValueChange = { viewModel.setUserPW2(it) },
                 label = {
                     Text(
-                        text = "Branch"
+                        text = "check password"
                     )
                 },
             )
@@ -73,12 +73,30 @@ fun SignUpScreen(
 
         Button(
             onClick = {
-                if (viewModel.haveEmptyField()) {
+                if (viewModel.hasEmptyField()) {
                     Toast.makeText(context, "Please fill all the blanks", Toast.LENGTH_SHORT).show()
                 } else {
-                    viewModel.saveEmployee()
-                    Toast.makeText(context, "Sign up complete! Please log in again.", Toast.LENGTH_SHORT).show()
-                    navController.popBackStack()
+                    if (viewModel.userID.value in viewModel.userList.value.map { it.userID }) {
+                        Toast.makeText(
+                            context,
+                            "This ID already exists. Try another ID.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (viewModel.userPW.value != viewModel.userPW2.value) {
+                        Toast.makeText(
+                            context,
+                            "Passwords do not match. Please check the password again.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        viewModel.saveUser()
+                        Toast.makeText(
+                            context,
+                            "Sign up complete! Please log in again.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        navController.popBackStack()
+                    }
                 }
             }
         ) {

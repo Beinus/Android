@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -19,7 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.beinus.graphs.RootGraph
 import com.example.beinus.presentation.account_setting.AccountSettingViewModel
 
@@ -28,7 +26,7 @@ fun LoginScreen(
     navController: NavHostController,
     viewModel: AccountSettingViewModel = hiltViewModel()
 ) {
-    viewModel.getAllEmployees()
+    viewModel.getAllUsers()
 
     Column(
         modifier = Modifier
@@ -41,8 +39,8 @@ fun LoginScreen(
 
         Column {
             OutlinedTextField(
-                value = viewModel.name.value,
-                onValueChange = { viewModel.setName(it) },
+                value = viewModel.userID.value,
+                onValueChange = { viewModel.setUserID(it) },
                 label = {
                     Text(
                         text = "Name"
@@ -54,20 +52,8 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedTextField(
-                value = viewModel.location.value,
-                onValueChange = { viewModel.setLocation(it) },
-                label = {
-                    Text(
-                        text = "Location"
-                    )
-                },
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                value = viewModel.branch.value,
-                onValueChange = { viewModel.setBranch(it) },
+                value = viewModel.userPW.value,
+                onValueChange = { viewModel.setUserPW(it) },
                 label = {
                     Text(
                         text = "Branch"
@@ -82,26 +68,30 @@ fun LoginScreen(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    if (viewModel.haveEmptyField()) {
+                    if (viewModel.hasEmptyField()) {
                         Toast.makeText(context, "Please fill all the blanks", Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        val matchingEmployee =
-                            viewModel.employeeList.value.firstOrNull { it.name == viewModel.name.value }
-                        if (matchingEmployee != null && matchingEmployee.branch == viewModel.branch.value) {
-                            // Employee with matching name and branch found! Perform your desired action.
+                        val matchingUser =
+                            viewModel.userList.value.firstOrNull { it.userID == viewModel.userID.value }
+                        if (matchingUser != null && matchingUser.userPW == viewModel.userPW.value) {
+
+                            // User with matching name and branch found! Perform your desired action.
                             Toast.makeText(
                                 context,
-                                "Welcome, ${viewModel.name.value}!",
+                                "Welcome, ${viewModel.userID.value}!",
                                 Toast.LENGTH_SHORT
                             ).show()
+
+                            // Clear backstack to LoginScreen
                             navController.popBackStack(
                                 RootGraph.LoginScreen.route,
                                 inclusive = true
-                            ) // Clear backstack to LoginScreen
+                            )
                             navController.navigate(RootGraph.MainScreen.route)
+
                         } else {
-                            Toast.makeText(context, "Wrong id or password.", Toast.LENGTH_SHORT)
+                            Toast.makeText(context, "Wrong ID or password.", Toast.LENGTH_SHORT)
                                 .show()
                         }
                     }

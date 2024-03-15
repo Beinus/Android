@@ -30,7 +30,7 @@ fun HomeScreen(
     val state = rememberLazyListState()
 
     LaunchedEffect(Unit) {
-        viewModel.getAllEmployees()
+        viewModel.getAllUsers()
     }
 
     LazyColumn(
@@ -39,7 +39,7 @@ fun HomeScreen(
             .padding(paddingValues = paddingValues),
         state = state
     ) {
-        items(viewModel.employeeList.value) {
+        items(viewModel.userList.value) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -47,16 +47,9 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column {
-                    Text(
-                        text = it.name,
-                        fontSize = 30.sp
-                    )
-                    Text(text = it.location)
-                }
                 Text(
-                    text = it.branch,
-                    fontSize = 20.sp
+                    text = it.userID,
+                    fontSize = 30.sp
                 )
             }
         }
